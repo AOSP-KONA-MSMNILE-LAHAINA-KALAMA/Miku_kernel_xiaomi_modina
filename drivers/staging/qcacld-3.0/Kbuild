@@ -754,8 +754,10 @@ WLAN_LOGGING_INC_DIR :=	$(WLAN_LOGGING_DIR)/inc
 WLAN_LOGGING_SRC_DIR :=	$(WLAN_LOGGING_DIR)/src
 
 WLAN_LOGGING_INC     := -I$(WLAN_ROOT)/$(WLAN_LOGGING_INC_DIR)
+ifeq ($(BUILD_DEBUG_VERSION), 1)
 WLAN_LOGGING_OBJS    := $(WLAN_LOGGING_SRC_DIR)/wlan_logging_sock_svc.o \
 		$(WLAN_LOGGING_SRC_DIR)/wlan_roam_debug.o
+endif
 
 $(call add-wlan-objs,wlan_logging,$(WLAN_LOGGING_OBJS))
 
@@ -3797,9 +3799,11 @@ KBUILD_CPPFLAGS += $(cppflags-y)
 # will override the kernel settings.
 ifeq ($(call cc-option-yn, -Wmaybe-uninitialized), y)
 ccflags-y += -Wmaybe-uninitialized
+ifneq (y,$(CONFIG_ARCH_MSM))
+ccflags-y += -Wframe-larger-than=4096
+endif
 endif
 ccflags-y += -Wmissing-prototypes
-ccflags-y += -Wframe-larger-than=4096
 
 ifeq ($(call cc-option-yn, -Wheader-guard), y)
 ccflags-y += -Wheader-guard
