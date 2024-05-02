@@ -1,15 +1,12 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #ifndef _CAM_DEBUG_UTIL_H_
 #define _CAM_DEBUG_UTIL_H_
 
 #include <linux/platform_device.h>
-
-#define CAM_IS_NULL_TO_STR(ptr) ((ptr) ? "Non-NULL" : "NULL")
 
 /* Module IDs used for debug logging */
 #define CAM_CDM        (1 << 0)
@@ -69,6 +66,18 @@ struct cam_cpas_debug_settings {
 	uint64_t mnoc_sf_icp_ib_bw;
 	uint64_t camnoc_bw;
 };
+
+/* xiaomi add hw trigger - begin */
+/*
+ *  cam_debug_hw_trigger()
+ *
+ * @brief     :  Debug for hw question.set up this as a hw trigger.
+ *               in 8350:cam_hw_trigger_override[0]= 308(offset)+value(in schematic diagram)
+ *
+ * @module_id :  Respective Module ID which is calling this function
+ */
+int cam_debug_hw_trigger(unsigned int module_id);
+/* xiaomi add hw trigger - end */
 
 /**
  * struct camera_debug_settings - Sysfs debug settings for camera
